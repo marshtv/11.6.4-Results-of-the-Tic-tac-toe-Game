@@ -72,7 +72,7 @@ bool check_2_Diagonal_Win(std::string row_A, std::string row_B, std::string row_
 
 int turns_Number_by_Player_or_Remains(std::string row_A, std::string row_B,
                                       std::string row_C, char x_or_o_or_dot) {
-    int turns_X = 0, turns_O = 0, turns_remains;
+    int turns_X = 0, turns_O = 0, turns_remains = 0;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (getSymbol_by_coordinate(row_A, row_B, row_C, i, j) == 'X')
@@ -148,22 +148,24 @@ bool is_Game_Correct_Win(std::string row_A, std::string row_B, std::string row_C
                 - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)) > 1) {
         std::cout << "Incorrect (number of turns ERROR)\n";
         return false;
-    } else if      ((turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
+    } else if      (abs(turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)) == 0
-                   || (turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
+                   || abs(turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)) == 1) {
-        if (rowWins_O == 1 || columnWins_O == 1 || rowWins_O == 1 && columnWins_O == 1
+        if (rowWins_O == 1 || columnWins_O == 1 || diagonal_1_Wins_O == 1 || diagonal_2_Wins_O == 1
+				|| rowWins_O == 1 && columnWins_O == 1
                 || rowWins_O == 1 && diagonal_1_Wins_O == 1 || rowWins_O == 1 && diagonal_2_Wins_O == 1
                 || columnWins_O == 1 && diagonal_1_Wins_O == 1 || columnWins_O == 1 && diagonal_2_Wins_O == 1) {
             std::cout << "Vanya win.\n";
             return true;
         }
     }
-    if      ((turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)
-                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)) == 0
-                    || (turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)
-                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)) == 1) {
-        if (rowWins_X == 1 || columnWins_X == 1 || rowWins_X == 1 && columnWins_X == 1
+    if      (abs(turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
+                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)) == 0
+                    || abs(turns_Number_by_Player_or_Remains(row_A, row_B, row_C, o_Player)
+                    - turns_Number_by_Player_or_Remains(row_A, row_B, row_C, x_Player)) == 1) {
+        if (rowWins_X == 1 || columnWins_X == 1 || diagonal_1_Wins_X == 1 || diagonal_2_Wins_X == 1
+				|| rowWins_X == 1 && columnWins_X == 1
                 || rowWins_X == 1 && diagonal_1_Wins_X == 1 || rowWins_X == 1 && diagonal_2_Wins_X == 1
                 || columnWins_X == 1 && diagonal_1_Wins_X == 1 || columnWins_X == 1 && diagonal_2_Wins_X == 1) {
             std::cout << "Petya win.\n";
